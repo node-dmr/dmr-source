@@ -1,6 +1,6 @@
 {
-  "name": "dmr-lib",
-  "version": "0.0.1",
+  "name": "dmr-source",
+  "version": "0.0.2",
   "discription": "Library modules of node-dmr",
   "scripts": {
     "test": "mocha",
