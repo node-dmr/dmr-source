@@ -2,12 +2,11 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 16:23:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-07-24 17:19:14
+ * @Last Modified time: 2018-07-24 21:26:05
  */
 const http = require('http');
 const qs = require('querystring');
 const Connector = require('../pipeline/connector');
-// const Log =require('../util/log');
 const Source = require('../source/source');
 const file = require('../util/file');
 const RangeFormatter = require('../formatter/formatter-range');
