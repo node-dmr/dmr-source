@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-- 6
+  - lts/*
 branches:
   only:
   - master
 install:
-- npm install
+  - npm install
 script:
-- npm test
+  - npm test
 after_success:
-- npm run coveralls
+  - npm run coveralls
