@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "discription": "Library modules of node-dmr",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -t 3000",
     "lint": "eslint src test",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
