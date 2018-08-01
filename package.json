@@ -1,10 +1,11 @@
 {
   "name": "dmr-source",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "discription": "Library modules of node-dmr",
   "scripts": {
     "test": "mocha -t 3000",
     "lint": "eslint src test",
+    "doc": "jsdoc2md --template README.hbs src/*.js > README.md",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
@@ -23,7 +24,10 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "jsdoc-to-markdown": "^4.0.1"
+  },
   "engines": {
     "node": ">= 6.0.x"
   },

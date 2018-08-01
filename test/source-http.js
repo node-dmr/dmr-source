@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const HttpSource= require('../src/source-http');
 const TestServer = require('./util/test-server');
-const TestConfig = {port: 8099 , content: 'hello dmr\nsuccess', timeOut: 2000};
+const TestConfig = {port: 8099 , content: 'hello dmr\nsuccess', timeOut: 1000};
 
 describe("HttpSource Test", () =>{
 
@@ -27,13 +27,16 @@ describe("HttpSource Test", () =>{
                 expect(param.port).to.be.equal("8077");
                 expect(param.exra).to.be.equal(undefined);
                 param.port =  TestConfig.port;
-                console.log("\t\tbeforeCreate : param is", param);
+                console.log("beforeCreate : param is", param);
                 return param;
             }
         });
         let content = "";
         stream.on('data', function(chunk){
             content += chunk.toString();
+        });
+        stream2 = httpSource.createReadableStream({
+            port: TestConfig.port
         });
         return new Promise((resolve, reject) => {
             stream.on('end', function(){
