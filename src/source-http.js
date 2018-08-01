@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 16:23:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-01 15:37:17
+ * @Last Modified time: 2018-08-01 18:33:11
  */
 const http = require('http');
 const qs = require('querystring');
@@ -33,7 +33,7 @@ class HttpSource extends Source{
         super(config);
     }
     /**
-     * @implements
+     * @implements {createReadableStream}
      * @param  {JSON} option
      * @param {beforeCreateCallback} option.beforeCreate
      * @returns {stream.Readable}

@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-01 15:38:42
+ * @Last Modified time: 2018-08-01 18:33:23
  */
 const path = require('path');
 const fs = require('fs');
@@ -33,7 +33,7 @@ class FileSource extends Source{
         super(config);
     }
     /**
-     * @implements
+     * @implements {createWritableStream}
      * @param  {JSON} option
      * @param {beforeCreateCallback} option.beforeCreate
      * @returns {stream.Writable}
@@ -58,7 +58,7 @@ class FileSource extends Source{
         return writer;
     }
     /**
-     * @implements
+     * @implements {createReadableStream}
      * @param  {JSON} option
      * @param {beforeCreateCallback} option.beforeCreate
      * @returns {stream.Readable}
