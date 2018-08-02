@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 17:02:27 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 11:35:04
+ * @Last Modified time: 2018-08-02 12:19:03
  */
 const EventEmitter = require('events');
 
@@ -16,7 +16,7 @@ class Source extends EventEmitter{
      */
 
     /**
-     * JSON which contains ECMAScript6 TemplateString attr
+     * JSON which contains ECMAScript6 TemplateString param
      * @typedef {JSON} EsTemplateJSON
      * @example 
      * let estpljson = {

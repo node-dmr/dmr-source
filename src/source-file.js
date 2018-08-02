@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 11:17:38
+ * @Last Modified time: 2018-08-02 12:16:31
  */
 const path = require('path');
 const fs = require('fs');
@@ -37,7 +37,7 @@ class FileSource extends Source{
     }
     /**
      * @implements {createWritableStream}
-     * @param {JSON} [option] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+     * @param {JSON} [option] - option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config.
      * @param {JSON} [option.scope] - esTemplateString variable
      * @param {string} [option.path]
      * @param {string} [option.encoding]
@@ -61,7 +61,7 @@ class FileSource extends Source{
     }
     /**
      * @implements {createReadableStream}
-     * @param {JSON} [option] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+     * @param {JSON} [option] - option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config.
      * @param {JSON} [option.scope] - esTemplateString variable
      * @param {string} [option.path]
      * @param {string} [option.encoding]

@@ -5,7 +5,7 @@
 [![npm downloads](http://img.shields.io/npm/dm/dmr-source.svg)](https://www.npmjs.org/package/dmr-source)
 
 
-## What`s dmr-source
+# What's dmr-source
 
 Dmr-source is source modules of dmr framework.
 The source is the abstraction of the DMR framework input.
@@ -17,6 +17,51 @@ dmr-source will support different kinds of storage such as local file / remote (
 - [x] FtpSource
 - [ ] SftpSource
 - [ ] HadoopSource
+
+# Quick Start
+Get file from ftp server to local
+```js
+const Range = require('dmr-util').range;
+let range = new Range({"startTimeStamp": 1532608141511, "endTimeStamp": 1532611765781});
+let scope = range.toScope(); // such as 
+// scope = {"YYYY":"2018", "MM": "12", "DD":"01", "hh": "01", "mm": "00", "ss": "00", interval: {"m": 60, "s": "3600", "h": "1"}}
+
+let fileSource = new require('dmr-source').FileSource({
+  "path": "`/home/work/data/log/search/{$YYYY}{$MM}{$DD}.{$hh}{$mm}-{$interval.m}`"
+});
+let output = fileSource.createWritableStream({scope: scope});
+
+let input = new require('dmr-source').FtpSource({
+  "host": "test.hz01.demo.com",
+  "path": "`/home/work/speedup/{$YYYY}{$MM}{$DD}/{$hh}.gz`",
+  "port": "21"
+}).createReadableStream({scope: scope});
+
+// load ftp file from ftp://test.hz01.demo.com:21/home/work/speedup/20181201/01.gz
+// save to local file to /home/work/data/log/search/20181201.0100-60
+input.pipe(output);
+```
+
+Copy local file and change path by fetch new Range
+```js
+let scope0 = new Range({"start": "2018-08-01", "last": "1h"}).toScope();
+fileSource.createReadableStream({scope: scope}).pipe(
+    fileSource.createWritableStream({scope: scope0});
+);
+```
+
+And you can use the dmr-source link dmr-pipeline (or any other transformer) to achieve magic transformation.
+
+```js
+let ungzip =  require("zlib").createGunzip();
+let line =  require("dmr-pipeline").lineBreaker;
+httpSource.createReadableStream({"url": "http://xxx.com/log.gz"})
+  .pipe(ungzip)
+  .pipe(new lineBreaker())
+  .pipe(fileSource.createReadableStream());
+```
+
+# API
 
 ## Classes
 
@@ -41,7 +86,7 @@ dmr-source will support different kinds of storage such as local file / remote (
 <dd><p>ECMAScript6 TemplateString</p>
 </dd>
 <dt><a href="#EsTemplateJSON">EsTemplateJSON</a> : <code>JSON</code></dt>
-<dd><p>JSON which contains ECMAScript6 TemplateString attr</p>
+<dd><p>JSON which contains ECMAScript6 TemplateString param</p>
 </dd>
 <dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
 <dd><p>beforeCreateCallback will be called before creating a readable / writable stream</p>
@@ -144,7 +189,12 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 **Example**  
 ```js
-// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({scope: {"date": "20180801"}});let output = fileSource.createWritableStream({scope: {"date": "20180802"}});input.pipe(output);
+// copy a big log file
+
+let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
+let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
+let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
+input.pipe(output);
 ```
 <a name="FileSource+createWritableStream"></a>
 
@@ -155,7 +205,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options |
+| [option] | <code>JSON</code> | option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config. |
 | [option.scope] | <code>JSON</code> | esTemplateString variable |
 | [option.path] | <code>string</code> |  |
 | [option.encoding] | <code>string</code> |  |
@@ -171,7 +221,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options |
+| [option] | <code>JSON</code> | option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config. |
 | [option.scope] | <code>JSON</code> | esTemplateString variable |
 | [option.path] | <code>string</code> |  |
 | [option.encoding] | <code>string</code> |  |
@@ -224,7 +274,7 @@ input.pipe(process.stdout);
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback |
+| [option] | <code>JSON</code> | option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config. |
 | [option.scope] | <code>JSON</code> | esTemplateString variable |
 | [option.protocol] | <code>string</code> |  |
 | [option.host] | <code>string</code> |  |
@@ -254,7 +304,7 @@ let estplstring = '`today is ${date}`';
 <a name="EsTemplateJSON"></a>
 
 ## EsTemplateJSON : <code>JSON</code>
-JSON which contains ECMAScript6 TemplateString attr
+JSON which contains ECMAScript6 TemplateString param
 
 **Kind**: global typedef  
 **Example**  
