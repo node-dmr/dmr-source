@@ -2,15 +2,32 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 17:02:27 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 10:06:26
+ * @Last Modified time: 2018-08-02 11:35:04
  */
 const EventEmitter = require('events');
 
 
 class Source extends EventEmitter{
     /**
+     * ECMAScript6 TemplateString
+     * @typedef {string} EsTemplateString
+     * @example 
+     * let estplstring = '`today is ${date}`';
+     */
+
+    /**
+     * JSON which contains ECMAScript6 TemplateString attr
+     * @typedef {JSON} EsTemplateJSON
+     * @example 
+     * let estpljson = {
+     *  'esinfo': '`today is ${date}`',
+     *  'info': 'normal info'
+     * };
+     */
+
+    /**
      * @extends {EventEmitter}
-     * @param  {JSON} config 
+     * @param  {EsTemplateJSON} config 
      * @classdesc Source(dmr-source) is data files stored locally or remotely, which can be read or written.
      *            <br>Source constructor need a JSON config, it usually defined in project and should be static .
      *            <br>createReadableStream and createWritableStream need options which is variables.
@@ -54,7 +71,7 @@ class Source extends EventEmitter{
      */
     createReadableStream(option) {
         /**
-         * This callback is displayed as part of the Requester class.
+         * beforeCreateCallback will be called before creating a readable / writable stream
          * @callback beforeCreateCallback
          * @param {JSON} config
          * @returns {JSON} requestParam
@@ -87,7 +104,8 @@ class Source extends EventEmitter{
     }
 
     /**
-     * @param  {object} option - option which contains es6 template string  
+     * @private
+     * @param  {EsTemplateJSON} option - option which contains es6 template string  
      * @param  {object} scope - template variable
      * @example
      *  this.fetchOption({

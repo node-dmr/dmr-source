@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 16:23:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:29:27
+ * @Last Modified time: 2018-08-02 11:19:50
  */
 const http = require('http');
 const qs = require('querystring');
@@ -12,7 +12,11 @@ const Source = require('./source');
 class HttpSource extends Source{
     /**
      * @constructor
-     * @param {JSON} config -config of a HttpSource 
+     * @param {EsTemplateJSON} [config] -config of a HttpSource, besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback
+     * @param {string} [config.protocol]
+     * @param {string} [config.host]
+     * @param {string} [config.port]
+     * @param {string} [config.path]
      * @extends {Source}
      * @classdesc HttpSource can provide a ReadableStream via http request
      * @example // Get httpStream from http server
@@ -34,8 +38,13 @@ class HttpSource extends Source{
     }
     /**
      * @implements {createReadableStream}
-     * @param  {JSON} option
-     * @param {beforeCreateCallback} option.beforeCreate
+     * @param {JSON} [option] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback
+     * @param {JSON} [option.scope] - esTemplateString variable
+     * @param {string} [option.protocol]
+     * @param {string} [option.host]
+     * @param {string} [option.port]
+     * @param {string} [option.path]
+     * @param {beforeCreateCallback} [option.beforeCreate]
      * @returns {stream.Readable}
      */
     createReadableStream (option){

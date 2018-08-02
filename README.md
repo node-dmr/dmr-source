@@ -37,8 +37,14 @@ dmr-source will support different kinds of storage such as local file / remote (
 ## Typedefs
 
 <dl>
+<dt><a href="#EsTemplateString">EsTemplateString</a> : <code>string</code></dt>
+<dd><p>ECMAScript6 TemplateString</p>
+</dd>
+<dt><a href="#EsTemplateJSON">EsTemplateJSON</a> : <code>JSON</code></dt>
+<dd><p>JSON which contains ECMAScript6 TemplateString attr</p>
+</dd>
 <dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
-<dd><p>This callback is displayed as part of the Requester class.</p>
+<dd><p>beforeCreateCallback will be called before creating a readable / writable stream</p>
 </dd>
 </dl>
 
@@ -56,7 +62,6 @@ Source(dmr-source) is data files stored locally or remotely, which can be read o
     * [new Source(config)](#new_Source_new)
     * *[.createReadableStream(option)](#Source+createReadableStream) ⇒ <code>stream.Readable</code>*
     * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
-    * [.fetchOption(option, scope)](#Source+fetchOption)
 
 <a name="new_Source_new"></a>
 
@@ -64,7 +69,7 @@ Source(dmr-source) is data files stored locally or remotely, which can be read o
 
 | Param | Type |
 | --- | --- |
-| config | <code>JSON</code> | 
+| config | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | 
 
 **Example**  
 ```js
@@ -113,26 +118,6 @@ input.pipe(output);
 | --- | --- |
 | option | <code>JSON</code> | 
 
-<a name="Source+fetchOption"></a>
-
-### source.fetchOption(option, scope)
-**Kind**: instance method of [<code>Source</code>](#Source)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| option | <code>object</code> | option which contains es6 template string |
-| scope | <code>object</code> | template variable |
-
-**Example**  
-```js
-this.fetchOption({
-     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
- }, {
-     "YYYY": "2018", "MM": "08", "DD": "01"
- });
- 
- // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
-```
 <a name="FileSource"></a>
 
 ## FileSource ⇐ [<code>Source</code>](#Source)
@@ -142,18 +127,20 @@ FileSource can provide a ReadableStream/WritableStream of local file
 **Extends**: [<code>Source</code>](#Source)  
 
 * [FileSource](#FileSource) ⇐ [<code>Source</code>](#Source)
-    * [new FileSource(config)](#new_FileSource_new)
-    * [.createWritableStream(option)](#FileSource+createWritableStream) ⇒ <code>stream.Writable</code>
-    * [.createReadableStream(option)](#FileSource+createReadableStream) ⇒ <code>stream.Readable</code>
-    * [.fetchOption(option, scope)](#Source+fetchOption)
+    * [new FileSource([config])](#new_FileSource_new)
+    * [.createWritableStream([option])](#FileSource+createWritableStream) ⇒ <code>stream.Writable</code>
+    * [.createReadableStream([option])](#FileSource+createReadableStream) ⇒ <code>stream.Readable</code>
 
 <a name="new_FileSource_new"></a>
 
-### new FileSource(config)
+### new FileSource([config])
 
 | Param | Type | Description |
 | --- | --- | --- |
-| config | <code>JSON</code> | config of a FileSource |
+| [config] | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options |
+| [config.path] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.encoding] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.highWaterMark] | <code>int</code> |  |
 
 **Example**  
 ```js
@@ -161,48 +148,36 @@ FileSource can provide a ReadableStream/WritableStream of local file
 ```
 <a name="FileSource+createWritableStream"></a>
 
-### fileSource.createWritableStream(option) ⇒ <code>stream.Writable</code>
+### fileSource.createWritableStream([option]) ⇒ <code>stream.Writable</code>
 **Kind**: instance method of [<code>FileSource</code>](#FileSource)  
 **Implements**: <code>createWritableStream</code>  
 **Overrides**: [<code>createWritableStream</code>](#Source+createWritableStream)  
 
-| Param | Type |
-| --- | --- |
-| option | <code>JSON</code> | 
-| option.beforeCreate | [<code>beforeCreateCallback</code>](#beforeCreateCallback) | 
+| Param | Type | Description |
+| --- | --- | --- |
+| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options |
+| [option.scope] | <code>JSON</code> | esTemplateString variable |
+| [option.path] | <code>string</code> |  |
+| [option.encoding] | <code>string</code> |  |
+| [option.highWaterMark] | <code>int</code> |  |
+| [option.beforeCreate] | [<code>beforeCreateCallback</code>](#beforeCreateCallback) |  |
 
 <a name="FileSource+createReadableStream"></a>
 
-### fileSource.createReadableStream(option) ⇒ <code>stream.Readable</code>
+### fileSource.createReadableStream([option]) ⇒ <code>stream.Readable</code>
 **Kind**: instance method of [<code>FileSource</code>](#FileSource)  
 **Implements**: <code>createReadableStream</code>  
 **Overrides**: [<code>createReadableStream</code>](#Source+createReadableStream)  
 
-| Param | Type |
-| --- | --- |
-| option | <code>JSON</code> | 
-| option.beforeCreate | [<code>beforeCreateCallback</code>](#beforeCreateCallback) | 
-
-<a name="Source+fetchOption"></a>
-
-### fileSource.fetchOption(option, scope)
-**Kind**: instance method of [<code>FileSource</code>](#FileSource)  
-
 | Param | Type | Description |
 | --- | --- | --- |
-| option | <code>object</code> | option which contains es6 template string |
-| scope | <code>object</code> | template variable |
+| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options |
+| [option.scope] | <code>JSON</code> | esTemplateString variable |
+| [option.path] | <code>string</code> |  |
+| [option.encoding] | <code>string</code> |  |
+| [option.highWaterMark] | <code>int</code> |  |
+| [option.beforeCreate] | [<code>beforeCreateCallback</code>](#beforeCreateCallback) |  |
 
-**Example**  
-```js
-this.fetchOption({
-     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
- }, {
-     "YYYY": "2018", "MM": "08", "DD": "01"
- });
- 
- // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
-```
 <a name="HttpSource"></a>
 
 ## HttpSource ⇐ [<code>Source</code>](#Source)
@@ -212,18 +187,21 @@ HttpSource can provide a ReadableStream via http request
 **Extends**: [<code>Source</code>](#Source)  
 
 * [HttpSource](#HttpSource) ⇐ [<code>Source</code>](#Source)
-    * [new HttpSource(config)](#new_HttpSource_new)
-    * [.createReadableStream(option)](#HttpSource+createReadableStream) ⇒ <code>stream.Readable</code>
+    * [new HttpSource([config])](#new_HttpSource_new)
+    * [.createReadableStream([option])](#HttpSource+createReadableStream) ⇒ <code>stream.Readable</code>
     * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
-    * [.fetchOption(option, scope)](#Source+fetchOption)
 
 <a name="new_HttpSource_new"></a>
 
-### new HttpSource(config)
+### new HttpSource([config])
 
 | Param | Type | Description |
 | --- | --- | --- |
-| config | <code>JSON</code> | config of a HttpSource |
+| [config] | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | config of a HttpSource, besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback |
+| [config.protocol] | <code>string</code> |  |
+| [config.host] | <code>string</code> |  |
+| [config.port] | <code>string</code> |  |
+| [config.path] | <code>string</code> |  |
 
 **Example**  
 ```js
@@ -239,15 +217,20 @@ input.pipe(process.stdout);
 ```
 <a name="HttpSource+createReadableStream"></a>
 
-### httpSource.createReadableStream(option) ⇒ <code>stream.Readable</code>
+### httpSource.createReadableStream([option]) ⇒ <code>stream.Readable</code>
 **Kind**: instance method of [<code>HttpSource</code>](#HttpSource)  
 **Implements**: <code>createReadableStream</code>  
 **Overrides**: [<code>createReadableStream</code>](#Source+createReadableStream)  
 
-| Param | Type |
-| --- | --- |
-| option | <code>JSON</code> | 
-| option.beforeCreate | [<code>beforeCreateCallback</code>](#beforeCreateCallback) | 
+| Param | Type | Description |
+| --- | --- | --- |
+| [option] | <code>JSON</code> | config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback |
+| [option.scope] | <code>JSON</code> | esTemplateString variable |
+| [option.protocol] | <code>string</code> |  |
+| [option.host] | <code>string</code> |  |
+| [option.port] | <code>string</code> |  |
+| [option.path] | <code>string</code> |  |
+| [option.beforeCreate] | [<code>beforeCreateCallback</code>](#beforeCreateCallback) |  |
 
 <a name="Source+createWritableStream"></a>
 
@@ -258,30 +241,33 @@ input.pipe(process.stdout);
 | --- | --- |
 | option | <code>JSON</code> | 
 
-<a name="Source+fetchOption"></a>
+<a name="EsTemplateString"></a>
 
-### httpSource.fetchOption(option, scope)
-**Kind**: instance method of [<code>HttpSource</code>](#HttpSource)  
+## EsTemplateString : <code>string</code>
+ECMAScript6 TemplateString
 
-| Param | Type | Description |
-| --- | --- | --- |
-| option | <code>object</code> | option which contains es6 template string |
-| scope | <code>object</code> | template variable |
-
+**Kind**: global typedef  
 **Example**  
 ```js
-this.fetchOption({
-     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
- }, {
-     "YYYY": "2018", "MM": "08", "DD": "01"
- });
- 
- // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
+let estplstring = '`today is ${date}`';
+```
+<a name="EsTemplateJSON"></a>
+
+## EsTemplateJSON : <code>JSON</code>
+JSON which contains ECMAScript6 TemplateString attr
+
+**Kind**: global typedef  
+**Example**  
+```js
+let estpljson = {
+ 'esinfo': '`today is ${date}`',
+ 'info': 'normal info'
+};
 ```
 <a name="beforeCreateCallback"></a>
 
 ## beforeCreateCallback ⇒ <code>JSON</code>
-This callback is displayed as part of the Requester class.
+beforeCreateCallback will be called before creating a readable / writable stream
 
 **Kind**: global typedef  
 **Returns**: <code>JSON</code> - requestParam  

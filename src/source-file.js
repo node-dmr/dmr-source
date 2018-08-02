@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:59:35
+ * @Last Modified time: 2018-08-02 11:17:38
  */
 const path = require('path');
 const fs = require('fs');
@@ -14,7 +14,10 @@ const OPTION_KEYS = ["path", "flags", "encoding", "fd", "mode", "autoClose", "st
 class FileSource extends Source{
     /**
      * @constructor
-     * @param {JSON} config -config of a FileSource 
+     * @param {EsTemplateJSON} [config] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+     * @param {string|EsTemplateString} [config.path]
+     * @param {string|EsTemplateString} [config.encoding]
+     * @param {int} [config.highWaterMark]
      * @extends {Source}
      * @classdesc FileSource can provide a ReadableStream/WritableStream of local file
      * @example // copy a big log file
@@ -34,8 +37,12 @@ class FileSource extends Source{
     }
     /**
      * @implements {createWritableStream}
-     * @param  {JSON} option
-     * @param {beforeCreateCallback} option.beforeCreate
+     * @param {JSON} [option] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+     * @param {JSON} [option.scope] - esTemplateString variable
+     * @param {string} [option.path]
+     * @param {string} [option.encoding]
+     * @param {int} [option.highWaterMark]
+     * @param {beforeCreateCallback} [option.beforeCreate]
      * @returns {stream.Writable}
      */
     createWritableStream (option){
@@ -54,8 +61,12 @@ class FileSource extends Source{
     }
     /**
      * @implements {createReadableStream}
-     * @param  {JSON} option
-     * @param {beforeCreateCallback} option.beforeCreate
+     * @param {JSON} [option] - config of a FileSource , besides following options also support other param <br> you can see  https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+     * @param {JSON} [option.scope] - esTemplateString variable
+     * @param {string} [option.path]
+     * @param {string} [option.encoding]
+     * @param {int} [option.highWaterMark]
+     * @param {beforeCreateCallback} [option.beforeCreate]
      * @returns {stream.Readable}
      */
     createReadableStream (option){
