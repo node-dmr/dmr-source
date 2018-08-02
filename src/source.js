@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 17:02:27 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:59:13
+ * @Last Modified time: 2018-08-02 10:06:26
  */
 const EventEmitter = require('events');
 
@@ -59,7 +59,7 @@ class Source extends EventEmitter{
          * @param {JSON} config
          * @returns {JSON} requestParam
          */
-        option = option.beforeCreate(option);
+        // option = option.beforeCreate(option);
         this.emit('error', new Error("Must be implemented by subclass!"));
     }
 
