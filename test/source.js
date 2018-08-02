@@ -1,6 +1,6 @@
 const assert = require('assert');
 const expect = require('chai').expect;
-const Source= require('../src/source');
+const Source= require('../src').Source;
 
 describe('Source croustrct Check', () =>{
   it('createReadStream function must be implemented', ()=> {

@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const HttpSource= require('../src/source-http');
+const HttpSource= require('../src').HttpSource;
 const TestServer = require('./util/test-server');
 const TestConfig = {port: 8099 , content: 'hello dmr\nsuccess', timeOut: 1000};
 

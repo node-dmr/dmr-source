@@ -1,4 +1,3 @@
-# dmr-source
 [![Build Status](https://travis-ci.org/node-dmr/dmr-source.svg?branch=master)](https://travis-ci.org/node-dmr/dmr-source)
 [![Coveralls](https://img.shields.io/coveralls/node-dmr/dmr-source.svg)](https://coveralls.io/github/node-dmr/dmr-source)
 [![npm package](https://img.shields.io/npm/v/dmr-source.svg)](https://www.npmjs.org/package/dmr-source)
@@ -18,7 +17,11 @@ dmr-source will support different kinds of storage such as local file / remote (
 - [ ] SftpSource
 - [ ] HadoopSource
 
-# Quick Start
+# Features
+- ES6Template construct config make it easy to be reused
+- Stream based API
+
+# Usage
 Get file from ftp server to local
 ```js
 const Range = require('dmr-util').range;
@@ -73,6 +76,9 @@ httpSource.createReadableStream({"url": "http://xxx.com/log.gz"})
 </dd>
 <dt><a href="#FileSource">FileSource</a> ⇐ <code><a href="#Source">Source</a></code></dt>
 <dd><p>FileSource can provide a ReadableStream/WritableStream of local file</p>
+</dd>
+<dt><a href="#FtpSource">FtpSource</a> ⇐ <code><a href="#Source">Source</a></code></dt>
+<dd><p>FtpSource can provide a ReadableStream via ftp request</p>
 </dd>
 <dt><a href="#HttpSource">HttpSource</a> ⇐ <code><a href="#Source">Source</a></code></dt>
 <dd><p>HttpSource can provide a ReadableStream via http request</p>
@@ -189,12 +195,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 **Example**  
 ```js
-// copy a big log file
-
-let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
-let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
-let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
-input.pipe(output);
+// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({scope: {"date": "20180801"}});let output = fileSource.createWritableStream({scope: {"date": "20180802"}});input.pipe(output);
 ```
 <a name="FileSource+createWritableStream"></a>
 
@@ -228,6 +229,71 @@ input.pipe(output);
 | [option.highWaterMark] | <code>int</code> |  |
 | [option.beforeCreate] | [<code>beforeCreateCallback</code>](#beforeCreateCallback) |  |
 
+<a name="FtpSource"></a>
+
+## FtpSource ⇐ [<code>Source</code>](#Source)
+FtpSource can provide a ReadableStream via ftp request
+
+**Kind**: global class  
+**Extends**: [<code>Source</code>](#Source)  
+
+* [FtpSource](#FtpSource) ⇐ [<code>Source</code>](#Source)
+    * [new FtpSource([config])](#new_FtpSource_new)
+    * [.createReadableStream([option])](#FtpSource+createReadableStream) ⇒ <code>stream.Readable</code>
+    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
+
+<a name="new_FtpSource_new"></a>
+
+### new FtpSource([config])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [config] | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | config of a FtpSource, besides following options also support other param <br> you can see  https://www.npmjs.com/package/ftp |
+| config.host | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| config.path | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.port] | <code>integer</code> |  |
+| [config.user] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.password] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+
+**Example**  
+```js
+// Get ftpStream from ftp server
+
+let input = new FtpSource({
+  "host": "localhost", "path": "/home/work/nginx/log/access.${YYYY+MM+DD}.${hh}.log", "port": "21"
+}).createReadableStream({
+ scope: {"YYYY": "2018", "MM": "08", "DD": "01", "hh":"12"}
+});
+
+input.pipe(process.stdout);
+```
+<a name="FtpSource+createReadableStream"></a>
+
+### ftpSource.createReadableStream([option]) ⇒ <code>stream.Readable</code>
+**Kind**: instance method of [<code>FtpSource</code>](#FtpSource)  
+**Implements**: <code>createReadableStream</code>  
+**Overrides**: [<code>createReadableStream</code>](#Source+createReadableStream)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [option] | <code>JSON</code> | option of a FileSource, it will overriding the config param, option param should be string, not TemplateString. For more param please refer to  construct config. |
+| [option.scope] | <code>JSON</code> | esTemplateString variable |
+| [config.host] | <code>string</code> |  |
+| [config.path] | <code>string</code> |  |
+| [config.port] | <code>integer</code> |  |
+| [config.user] | <code>string</code> |  |
+| [config.password] | <code>string</code> |  |
+| [option.beforeCreate] | [<code>beforeCreateCallback</code>](#beforeCreateCallback) |  |
+
+<a name="Source+createWritableStream"></a>
+
+### *ftpSource.createWritableStream(option) ⇒ <code>stream.Writable</code>*
+**Kind**: instance abstract method of [<code>FtpSource</code>](#FtpSource)  
+
+| Param | Type |
+| --- | --- |
+| option | <code>JSON</code> | 
+
 <a name="HttpSource"></a>
 
 ## HttpSource ⇐ [<code>Source</code>](#Source)
@@ -248,10 +314,10 @@ HttpSource can provide a ReadableStream via http request
 | Param | Type | Description |
 | --- | --- | --- |
 | [config] | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | config of a HttpSource, besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback |
-| [config.protocol] | <code>string</code> |  |
-| [config.host] | <code>string</code> |  |
-| [config.port] | <code>string</code> |  |
-| [config.path] | <code>string</code> |  |
+| [config.protocol] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.host] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.port] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
+| [config.path] | <code>string</code> \| [<code>EsTemplateString</code>](#EsTemplateString) |  |
 
 **Example**  
 ```js

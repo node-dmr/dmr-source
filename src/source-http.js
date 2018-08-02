@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 16:23:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 12:16:40
+ * @Last Modified time: 2018-08-02 13:47:07
  */
 const http = require('http');
 const qs = require('querystring');
@@ -13,10 +13,10 @@ class HttpSource extends Source{
     /**
      * @constructor
      * @param {EsTemplateJSON} [config] -config of a HttpSource, besides following options also support other param <br> you can see  https://nodejs.org/api/http.html#http_http_request_options_callback
-     * @param {string} [config.protocol]
-     * @param {string} [config.host]
-     * @param {string} [config.port]
-     * @param {string} [config.path]
+     * @param {string|EsTemplateString} [config.protocol]
+     * @param {string|EsTemplateString} [config.host]
+     * @param {string|EsTemplateString} [config.port]
+     * @param {string|EsTemplateString} [config.path]
      * @extends {Source}
      * @classdesc HttpSource can provide a ReadableStream via http request
      * @example // Get httpStream from http server

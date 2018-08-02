@@ -2,10 +2,10 @@
  * @Author: qiansc 
  * @Date: 2018-08-01 14:44:35 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:47:55
+ * @Last Modified time: 2018-08-02 17:10:12
  */
 const expect = require('chai').expect;
-const FileSource = require('../src/source-file');
+const FileSource = require('../src').FileSource;
 const path = require('path');
 const fse = require('fs-extra');
 const TEST_JSON = {"status": "200"};

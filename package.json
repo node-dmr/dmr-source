@@ -21,12 +21,14 @@
     "chai": "^4.1.2",
     "coveralls": "^3.0.2",
     "eslint": "^5.2.0",
+    "ftp-srv": "^2.19.4",
     "istanbul": "^0.4.5",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "jsdoc-to-markdown": "^4.0.1"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
-    "jsdoc-to-markdown": "^4.0.1"
+    "ftp": "^0.3.10"
   },
   "engines": {
     "node": ">= 6.0.x"
