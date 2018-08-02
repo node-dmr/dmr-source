@@ -40,12 +40,6 @@ dmr-source will support different kinds of storage such as local file / remote (
 <dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
 <dd><p>This callback is displayed as part of the Requester class.</p>
 </dd>
-<dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
-<dd><p>This callback is displayed as part of the Requester class.</p>
-</dd>
-<dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
-<dd><p>This callback is displayed as part of the Requester class.</p>
-</dd>
 </dl>
 
 <a name="Source"></a>
@@ -163,12 +157,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 **Example**  
 ```js
-// copy a big log file
-
-let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
-let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
-let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
-input.pipe(output);
+// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({scope: {"date": "20180801"}});let output = fileSource.createWritableStream({scope: {"date": "20180802"}});input.pipe(output);
 ```
 <a name="FileSource+createWritableStream"></a>
 
@@ -289,30 +278,6 @@ this.fetchOption({
  
  // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
 ```
-<a name="beforeCreateCallback"></a>
-
-## beforeCreateCallback ⇒ <code>JSON</code>
-This callback is displayed as part of the Requester class.
-
-**Kind**: global typedef  
-**Returns**: <code>JSON</code> - requestParam  
-
-| Param | Type |
-| --- | --- |
-| config | <code>JSON</code> | 
-
-<a name="beforeCreateCallback"></a>
-
-## beforeCreateCallback ⇒ <code>JSON</code>
-This callback is displayed as part of the Requester class.
-
-**Kind**: global typedef  
-**Returns**: <code>JSON</code> - requestParam  
-
-| Param | Type |
-| --- | --- |
-| config | <code>JSON</code> | 
-
 <a name="beforeCreateCallback"></a>
 
 ## beforeCreateCallback ⇒ <code>JSON</code>
