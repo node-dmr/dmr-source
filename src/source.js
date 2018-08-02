@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 17:02:27 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:08:53
+ * @Last Modified time: 2018-08-02 09:59:13
  */
 const EventEmitter = require('events');
 
@@ -53,6 +53,13 @@ class Source extends EventEmitter{
      * @returns {stream.Readable}
      */
     createReadableStream(option) {
+        /**
+         * This callback is displayed as part of the Requester class.
+         * @callback beforeCreateCallback
+         * @param {JSON} config
+         * @returns {JSON} requestParam
+         */
+        option = option.beforeCreate(option);
         this.emit('error', new Error("Must be implemented by subclass!"));
     }
 

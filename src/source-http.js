@@ -49,12 +49,6 @@ class HttpSource extends Source{
             "path", "headers", "auth", "agent", "createConnection", "timeout", "setHost"
         ]);
         requestParam =  this.fetchOption(requestParam, option.scope || {});
-        /**
-         * This callback is displayed as part of the Requester class.
-         * @callback beforeCreateCallback
-         * @param {JSON} config
-         * @returns {JSON} requestParam
-         */
         requestParam = option.beforeCreate(requestParam);
 
         let req = http.request(requestParam, function(res) { 

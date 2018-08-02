@@ -40,6 +40,12 @@ dmr-source will support different kinds of storage such as local file / remote (
 <dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
 <dd><p>This callback is displayed as part of the Requester class.</p>
 </dd>
+<dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
+<dd><p>This callback is displayed as part of the Requester class.</p>
+</dd>
+<dt><a href="#beforeCreateCallback">beforeCreateCallback</a> ⇒ <code>JSON</code></dt>
+<dd><p>This callback is displayed as part of the Requester class.</p>
+</dd>
 </dl>
 
 <a name="Source"></a>

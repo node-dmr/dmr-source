@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:26:09
+ * @Last Modified time: 2018-08-02 09:59:35
  */
 const path = require('path');
 const fs = require('fs');
@@ -42,12 +42,6 @@ class FileSource extends Source{
         option = Object.assign({}, this.config, option);
         let options = this.normalize(option, OPTION_KEYS);
         options =  this.fetchOption(options, option.scope || {});
-        /**
-         * This callback is displayed as part of the Requester class.
-         * @callback beforeCreateCallback
-         * @param {JSON} config
-         * @returns {JSON} requestParam
-         */
         options = option.beforeCreate(options);
         // create baseUrl if not exists
         let baseUrl = path.dirname(options.path);
@@ -68,12 +62,6 @@ class FileSource extends Source{
         option = Object.assign({}, this.config, option);
         let options = this.normalize(option, OPTION_KEYS);
         options =  this.fetchOption(options, option.scope || {});
-        /**
-         * This callback is displayed as part of the Requester class.
-         * @callback beforeCreateCallback
-         * @param {JSON} config
-         * @returns {JSON} requestParam
-         */
         options = option.beforeCreate(options);
         // create baseUrl if not exists
         let reader = fs.createReadStream(options.path, options);

@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-08-01 14:44:35 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 09:32:58
+ * @Last Modified time: 2018-08-02 09:47:55
  */
 const expect = require('chai').expect;
 const FileSource = require('../src/source-file');
@@ -31,6 +31,7 @@ describe("Copy File By Using SourceFile", () =>{
             beforeCreate: (option) => {console.log('output option', option); return option;}
         });
         input.pipe(output);
+        input0 = inSource.createReadableStream();
         return new Promise((resolve, reject) => {
             input.on('end', function(){
                 console.log('Input End!');
