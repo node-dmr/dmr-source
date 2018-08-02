@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha -t 3000",
     "lint": "eslint src test",
-    "doc": "jsdoc2md --template README.hbs src/*.js > README.md",
+    "doc": "jsdoc2md --template README.hbs src/source.js src/source-*.js> README.md",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
