@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-08-01 14:44:35 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-01 18:10:03
+ * @Last Modified time: 2018-08-02 09:32:58
  */
 const expect = require('chai').expect;
 const FileSource = require('../src/source-file');
@@ -24,8 +24,12 @@ describe("Copy File By Using SourceFile", () =>{
         inSource = new FileSource({path: file});
         file0 = path.resolve(file0dir, './out.log');
         outSource = new FileSource({path: file0});
-        input = inSource.createReadableStream();
-        output = outSource.createWritableStream();
+        input = inSource.createReadableStream({
+            beforeCreate: (option) => {console.log('input option', option); return option;}
+        });
+        output = outSource.createWritableStream({
+            beforeCreate: (option) => {console.log('output option', option); return option;}
+        });
         input.pipe(output);
         return new Promise((resolve, reject) => {
             input.on('end', function(){
@@ -40,8 +44,12 @@ describe("Copy File By Using SourceFile", () =>{
                 }
             });
         }).then(() => {
-            fse.removeSync(path.resolve(file));
-            fse.removeSync(path.resolve(__dirname, './tmp/'));
+            setTimeout(() => {
+                fse.removeSync(path.resolve(file));
+                fse.removeSync(path.resolve(file0));
+                fse.removeSync(path.resolve(__dirname, './tmp/file'));
+                fse.removeSync(path.resolve(__dirname, './tmp/'));
+            }, 300);
         });
     });
 });

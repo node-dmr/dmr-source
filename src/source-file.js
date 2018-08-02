@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-01 18:33:23
+ * @Last Modified time: 2018-08-02 09:26:09
  */
 const path = require('path');
 const fs = require('fs');
@@ -20,8 +20,8 @@ class FileSource extends Source{
      * @example // copy a big log file
      * 
      * let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
-     * let input = fileSource.createReadableStream({"date": "20180801"});
-     * let output = fileSource.createWritableStream({"date": "20180802"});
+     * let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
+     * let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
      * input.pipe(output);
      */
     constructor(config){
@@ -41,6 +41,7 @@ class FileSource extends Source{
     createWritableStream (option){
         option = Object.assign({}, this.config, option);
         let options = this.normalize(option, OPTION_KEYS);
+        options =  this.fetchOption(options, option.scope || {});
         /**
          * This callback is displayed as part of the Requester class.
          * @callback beforeCreateCallback
@@ -66,6 +67,7 @@ class FileSource extends Source{
     createReadableStream (option){
         option = Object.assign({}, this.config, option);
         let options = this.normalize(option, OPTION_KEYS);
+        options =  this.fetchOption(options, option.scope || {});
         /**
          * This callback is displayed as part of the Requester class.
          * @callback beforeCreateCallback

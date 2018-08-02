@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-10 16:23:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-01 18:33:11
+ * @Last Modified time: 2018-08-02 09:29:27
  */
 const http = require('http');
 const qs = require('querystring');
@@ -48,7 +48,7 @@ class HttpSource extends Source{
             'protocol', 'host', 'hostname', "family", "port", "localAddress", "socketPath", "method", 
             "path", "headers", "auth", "agent", "createConnection", "timeout", "setHost"
         ]);
-        
+        requestParam =  this.fetchOption(requestParam, option.scope || {});
         /**
          * This callback is displayed as part of the Requester class.
          * @callback beforeCreateCallback

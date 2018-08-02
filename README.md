@@ -7,7 +7,7 @@
 
 ## What`s dmr-source
 
-dmr-source is source modules of dmr framework.
+Dmr-source is source modules of dmr framework.
 The source is the abstraction of the DMR framework input.
 dmr-source will support different kinds of storage such as local file / remote (http / ftp) / hadoop / ssh2...
 
@@ -60,6 +60,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
     * [new FileSource(config)](#new_FileSource_new)
     * [.createWritableStream(option)](#FileSource+createWritableStream) ⇒ <code>stream.Writable</code>
     * [.createReadableStream(option)](#FileSource+createReadableStream) ⇒ <code>stream.Readable</code>
+    * [.fetchOption(option, scope)](#Source+fetchOption)
 
 <a name="new_FileSource_new"></a>
 
@@ -71,7 +72,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 **Example**  
 ```js
-// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({"date": "20180801"});let output = fileSource.createWritableStream({"date": "20180802"});input.pipe(output);
+// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({scope: {"date": "20180801"}});let output = fileSource.createWritableStream({scope: {"date": "20180802"}});input.pipe(output);
 ```
 <a name="FileSource+createWritableStream"></a>
 
@@ -97,6 +98,26 @@ FileSource can provide a ReadableStream/WritableStream of local file
 | option | <code>JSON</code> | 
 | option.beforeCreate | [<code>beforeCreateCallback</code>](#beforeCreateCallback) | 
 
+<a name="Source+fetchOption"></a>
+
+### fileSource.fetchOption(option, scope)
+**Kind**: instance method of [<code>FileSource</code>](#FileSource)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| option | <code>object</code> | option which contains es6 template string |
+| scope | <code>object</code> | template variable |
+
+**Example**  
+```js
+this.fetchOption({
+     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
+ }, {
+     "YYYY": "2018", "MM": "08", "DD": "01"
+ });
+ 
+ // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
+```
 <a name="HttpSource"></a>
 
 ## HttpSource ⇐ [<code>Source</code>](#Source)
@@ -108,7 +129,8 @@ HttpSource can provide a ReadableStream via http request
 * [HttpSource](#HttpSource) ⇐ [<code>Source</code>](#Source)
     * [new HttpSource(config)](#new_HttpSource_new)
     * [.createReadableStream(option)](#HttpSource+createReadableStream) ⇒ <code>stream.Readable</code>
-    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>WritableStream</code>*
+    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
+    * [.fetchOption(option, scope)](#Source+fetchOption)
 
 <a name="new_HttpSource_new"></a>
 
@@ -144,13 +166,33 @@ input.pipe(process.stdout);
 
 <a name="Source+createWritableStream"></a>
 
-### *httpSource.createWritableStream(option) ⇒ <code>WritableStream</code>*
+### *httpSource.createWritableStream(option) ⇒ <code>stream.Writable</code>*
 **Kind**: instance abstract method of [<code>HttpSource</code>](#HttpSource)  
 
 | Param | Type |
 | --- | --- |
 | option | <code>JSON</code> | 
 
+<a name="Source+fetchOption"></a>
+
+### httpSource.fetchOption(option, scope)
+**Kind**: instance method of [<code>HttpSource</code>](#HttpSource)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| option | <code>object</code> | option which contains es6 template string |
+| scope | <code>object</code> | template variable |
+
+**Example**  
+```js
+this.fetchOption({
+     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
+ }, {
+     "YYYY": "2018", "MM": "08", "DD": "01"
+ });
+ 
+ // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
+```
 <a name="Source"></a>
 
 ## Source ⇐ <code>EventEmitter</code>
@@ -163,8 +205,9 @@ Source(dmr-source) is data files stored locally or remotely, which can be read o
 
 * [Source](#Source) ⇐ <code>EventEmitter</code>
     * [new Source(config)](#new_Source_new)
-    * *[.createReadableStream(option)](#Source+createReadableStream) ⇒ <code>ReadableStream</code>*
-    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>WritableStream</code>*
+    * *[.createReadableStream(option)](#Source+createReadableStream) ⇒ <code>stream.Readable</code>*
+    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
+    * [.fetchOption(option, scope)](#Source+fetchOption)
 
 <a name="new_Source_new"></a>
 
@@ -178,24 +221,34 @@ Source(dmr-source) is data files stored locally or remotely, which can be read o
 ```js
 // Get file from ftp server to local
 
-let range = {"startTimeStamp": 1532608141511, "endTimeStamp": 1532611765781};
+const Range = require('dmr-util').range;
+let range = new Range({"startTimeStamp": 1532608141511, "endTimeStamp": 1532611765781});
+let scope = range.toScope(); // such as 
+// scope = {"YYYY":"2018", "MM": "12", "DD":"01", "hh": "01", "mm": "00", "ss": "00", interval: {"m": 60, "s": "3600", "h": "1"}}
 
-let output = new FileSource({
-  "path": "data/log/search/{$YYYY}{$MM}{$DD}.{$hh}{$mm}-{$interval.m}",
-  "read-buffer-size": 100
-}).createWritableStream({"range": range});
+let output = new require('dmr-source').FileSource({
+  "path": "`/home/work/data/log/search/{$YYYY}{$MM}{$DD}.{$hh}{$mm}-{$interval.m}`",
+  "highWaterMark": 1024
+}).createWritableStream({
+   scope: scope
+});
 
-let input = new FtpSource({
+let input = new require('dmr-source').FtpSource({
   "host": "test.hz01.demo.com",
-  "path": "/home/work/speedup/{$YYYY}{$MM}{$DD}/{$hh}.gz",
+  "path": "`/home/work/speedup/{$YYYY}{$MM}{$DD}/{$hh}.gz`",
   "port": "21"
-}).createReadableStream();
+}).createReadableStream({
+   scope: scope
+});
+
+// load ftp file from ftp://test.hz01.demo.com:21/home/work/speedup/20181201/01.gz
+// save to local file at /home/work/data/log/search/20181201.0100-60
 
 input.pipe(output);
 ```
 <a name="Source+createReadableStream"></a>
 
-### *source.createReadableStream(option) ⇒ <code>ReadableStream</code>*
+### *source.createReadableStream(option) ⇒ <code>stream.Readable</code>*
 **Kind**: instance abstract method of [<code>Source</code>](#Source)  
 
 | Param | Type |
@@ -204,13 +257,33 @@ input.pipe(output);
 
 <a name="Source+createWritableStream"></a>
 
-### *source.createWritableStream(option) ⇒ <code>WritableStream</code>*
+### *source.createWritableStream(option) ⇒ <code>stream.Writable</code>*
 **Kind**: instance abstract method of [<code>Source</code>](#Source)  
 
 | Param | Type |
 | --- | --- |
 | option | <code>JSON</code> | 
 
+<a name="Source+fetchOption"></a>
+
+### source.fetchOption(option, scope)
+**Kind**: instance method of [<code>Source</code>](#Source)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| option | <code>object</code> | option which contains es6 template string |
+| scope | <code>object</code> | template variable |
+
+**Example**  
+```js
+this.fetchOption({
+     "url": "`http://localhost/${YYYY}${MM}${DD}.log`", "info": "TEST${YYYY}"
+ }, {
+     "YYYY": "2018", "MM": "08", "DD": "01"
+ });
+ 
+ // {"url": "http://localhost/20180801.log", "info": "TEST${YYYY}"}
+```
 <a name="beforeCreateCallback"></a>
 
 ## beforeCreateCallback ⇒ <code>JSON</code>
