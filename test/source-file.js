@@ -2,13 +2,14 @@
  * @Author: qiansc 
  * @Date: 2018-08-01 14:44:35 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-02 17:10:12
+ * @Last Modified time: 2018-08-02 19:37:50
  */
 const expect = require('chai').expect;
 const FileSource = require('../src').FileSource;
 const path = require('path');
 const fse = require('fs-extra');
 const TEST_JSON = {"status": "200"};
+const log =  require('./util/log');
 
 describe("Copy File By Using SourceFile", () =>{
     let file, file0, inSource, outSource, file0dir, input, output, promise;
@@ -20,27 +21,27 @@ describe("Copy File By Using SourceFile", () =>{
         fse.removeSync(file0dir);
     });
     it("TEST", () => {
-        console.log('Init Output / Input Stream');
+        log('Init Output / Input Stream');
         inSource = new FileSource({path: file});
         file0 = path.resolve(file0dir, './out.log');
         outSource = new FileSource({path: file0});
         input = inSource.createReadableStream({
-            beforeCreate: (option) => {console.log('input option', option); return option;}
+            beforeCreate: (option) => {log('input option', option); return option;}
         });
         output = outSource.createWritableStream({
-            beforeCreate: (option) => {console.log('output option', option); return option;}
+            beforeCreate: (option) => {log('output option', option); return option;}
         });
         input.pipe(output);
         input0 = inSource.createReadableStream();
         return new Promise((resolve, reject) => {
             input.on('end', function(){
-                console.log('Input End!');
+                log('Input End!');
                 let json = fse.readJsonSync(file0);
                 if (JSON.stringify(TEST_JSON) === JSON.stringify(json)) {
-                    console.log('Successfully Copy');
+                    log('Successfully Copy');
                     resolve();
                 } else {
-                    console.log('Failed to Copy');
+                    log('Failed to Copy');
                     reject();
                 }
             });

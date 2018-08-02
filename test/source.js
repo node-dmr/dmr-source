@@ -1,6 +1,7 @@
 const assert = require('assert');
 const expect = require('chai').expect;
 const Source= require('../src').Source;
+const log =  require('./util/log');
 
 describe('Source croustrct Check', () =>{
   it('createReadStream function must be implemented', ()=> {
@@ -55,7 +56,7 @@ describe('Source croustrct Check', () =>{
       }
     }, {"A": "a", "B": "b", "C": "c", "D": "d", "E": "e","F": "f","G": "g", "H": "h"});
     
-    console.log ("\noption fetch > ", option);
+    log ("\noption fetch > ", option);
 
     expect(option.A).to.be.equal("A");
     expect(option.B).to.be.equal("${B}");

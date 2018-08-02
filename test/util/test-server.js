@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-07-27 16:22:15 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-07-31 20:04:38
+ * @Last Modified time: 2018-08-02 19:08:27
  */
 
 
@@ -20,7 +20,7 @@ function start (config) {
     server.listen(config.port || 8088);
     
     // 终端打印如下信息
-    console.log('Test Server running at http://127.0.0.1:%s/', config.port || 8088);
+    console.log('\x1B[90mTest Server running at http://127.0.0.1:%s/\x1B[39m', config.port || 8088);
 
     timmer = setTimeout(() => {
         this.stop();

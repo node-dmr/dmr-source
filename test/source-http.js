@@ -1,16 +1,17 @@
 const expect = require('chai').expect;
 const HttpSource= require('../src').HttpSource;
 const TestServer = require('./util/test-server');
-const TestConfig = {port: 8099 , content: 'hello dmr\nsuccess', timeOut: 1000};
+const TestConfig = {port: 8099 , content: 'hello dmr\nsuccess'};
+const log =  require('./util/log');
 
 describe("HttpSource Test", () =>{
 
-    it('TestServer Start', function() {
+    before(function() {
+        log('TestServer Start');
         TestServer.start(TestConfig);
     });
 
     it('Connector Test With HttpRequest', function() {
-
         let config = {
             "host": "localhost",
             "path": "/",
@@ -27,7 +28,7 @@ describe("HttpSource Test", () =>{
                 expect(param.port).to.be.equal("8077");
                 expect(param.exra).to.be.equal(undefined);
                 param.port =  TestConfig.port;
-                console.log("beforeCreate : param is", param);
+                log("beforeCreate : param is", param);
                 return param;
             }
         });
@@ -40,15 +41,17 @@ describe("HttpSource Test", () =>{
         });
         return new Promise((resolve, reject) => {
             stream.on('end', function(){
-            if (content === TestConfig.content) {
-                console.log('response is same\n-------\n%s\n--------', content);
-                resolve();
-            } else {
-                console.log('response is different\n-------\n%s\n---------', content);
-                reject();
-            }
-            TestServer.stop();
+                if (content === TestConfig.content) {
+                    log('response is same\n-------\n%s\n--------', content);
+                    resolve();
+                } else {
+                    log('response is different\n-------\n%s\n---------', content);
+                    reject();
+                }
             });
         });
+    });
+    after(() => {
+        TestServer.stop();
     });
 });
