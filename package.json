@@ -23,12 +23,13 @@
     "eslint": "^5.2.0",
     "ftp-srv": "^2.19.4",
     "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "jsdoc-to-markdown": "^4.0.1"
+    "jsdoc-to-markdown": "^4.0.1",
+    "mocha": "^5.2.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
-    "ftp": "^0.3.10"
+    "ftp": "^0.3.10",
+    "line-by-line": "^0.1.6"
   },
   "engines": {
     "node": ">= 6.0.x"
