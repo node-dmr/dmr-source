@@ -16,3 +16,6 @@ dist/
 node_modules/
 test-reports/
 coverage/
+
+# develop
+mydev*

@@ -5,7 +5,6 @@
  * @Last Modified time: 2018-08-02 13:47:07
  */
 const http = require('http');
-const qs = require('querystring');
 const Stream = require('stream');
 const Source = require('./source');
 
