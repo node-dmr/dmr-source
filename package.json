@@ -1,6 +1,6 @@
 {
   "name": "dmr-source",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "discription": "source modules of node-dmr",
   "scripts": {
     "test": "mocha -t 3000",
