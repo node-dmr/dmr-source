@@ -14,6 +14,7 @@ dmr-source will support different kinds of storage such as local file / remote (
 - [x] FileSource
 - [x] HttpSource
 - [x] FtpSource
+- [x] MultiSource
 - [ ] SftpSource
 - [ ] HadoopSource
 
@@ -82,6 +83,9 @@ httpSource.createReadableStream({"url": "http://xxx.com/log.gz"})
 </dd>
 <dt><a href="#HttpSource">HttpSource</a> ⇐ <code><a href="#Source">Source</a></code></dt>
 <dd><p>HttpSource can provide a ReadableStream via http request</p>
+</dd>
+<dt><a href="#MultiSource">MultiSource</a> ⇐ <code><a href="#Source">Source</a></code></dt>
+<dd><p>MultiSource can provide a ReadableStream which composed of multiple readable streams</p>
 </dd>
 </dl>
 
@@ -352,6 +356,58 @@ input.pipe(process.stdout);
 
 ### *httpSource.createWritableStream(option) ⇒ <code>stream.Writable</code>*
 **Kind**: instance abstract method of [<code>HttpSource</code>](#HttpSource)  
+
+| Param | Type |
+| --- | --- |
+| option | <code>JSON</code> | 
+
+<a name="MultiSource"></a>
+
+## MultiSource ⇐ [<code>Source</code>](#Source)
+MultiSource can provide a ReadableStream which composed of multiple readable streams
+
+**Kind**: global class  
+**Extends**: [<code>Source</code>](#Source)  
+
+* [MultiSource](#MultiSource) ⇐ [<code>Source</code>](#Source)
+    * [new MultiSource([config])](#new_MultiSource_new)
+    * [.add(stream)](#MultiSource+add) ⇒ [<code>MultiSource</code>](#MultiSource)
+    * [.createReadableStream()](#MultiSource+createReadableStream)
+    * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
+
+<a name="new_MultiSource_new"></a>
+
+### new MultiSource([config])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [config] | [<code>EsTemplateJSON</code>](#EsTemplateJSON) | config of a MultiSource |
+
+**Example**  
+```js
+// MultiSourcelet multiSource = new MultiSource();multiSource.add(stream1).add(stream2).add(stream3);let input = multiSource.createReadableStream();input.on('error', err => {   // error will be emit when any input stream error   // and output is nothing});input.pipe(process.stdout);
+```
+<a name="MultiSource+add"></a>
+
+### multiSource.add(stream) ⇒ [<code>MultiSource</code>](#MultiSource)
+Add a Readable stream. It will be failed when createReadableStream has been called
+
+**Kind**: instance method of [<code>MultiSource</code>](#MultiSource)  
+
+| Param | Type |
+| --- | --- |
+| stream | <code>stream.Readable</code> | 
+
+<a name="MultiSource+createReadableStream"></a>
+
+### multiSource.createReadableStream()
+**Kind**: instance method of [<code>MultiSource</code>](#MultiSource)  
+**Implements**: <code>createReadableStream</code>  
+**Overrides**: [<code>createReadableStream</code>](#Source+createReadableStream)  
+<a name="Source+createWritableStream"></a>
+
+### *multiSource.createWritableStream(option) ⇒ <code>stream.Writable</code>*
+**Kind**: instance abstract method of [<code>MultiSource</code>](#MultiSource)  
 
 | Param | Type |
 | --- | --- |

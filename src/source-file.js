@@ -2,7 +2,7 @@
  * @Author: qiansc 
  * @Date: 2018-04-11 19:57:16 
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-05 16:48:05
+ * @Last Modified time: 2018-08-05 20:29:07
  */
 const path = require('path');
 const fs = require('fs');
@@ -76,11 +76,7 @@ class FileSource extends Source{
         options = option.beforeCreate(options);
         // create baseUrl if not exists
         let reader;
-        try{
         reader = fs.createReadStream(options.path, options);
-    } catch(e) {
-    console.log(91111111111);
-    }
         // this.emit('create', file, writer);
         return reader;
     }
