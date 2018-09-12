@@ -1,8 +1,8 @@
 /*
- * @Author: qiansc 
- * @Date: 2018-04-11 19:57:16 
+ * @Author: qiansc
+ * @Date: 2018-04-11 19:57:16
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-08-05 20:29:07
+ * @Last Modified time: 2018-09-12 13:17:19
  */
 const path = require('path');
 const fs = require('fs');
@@ -21,7 +21,7 @@ class FileSource extends Source{
      * @extends {Source}
      * @classdesc FileSource can provide a ReadableStream/WritableStream of local file
      * @example // copy a big log file
-     * 
+     *
      * let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
      * let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
      * let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
@@ -52,7 +52,7 @@ class FileSource extends Source{
         options = option.beforeCreate(options);
         // create baseUrl if not exists
         let baseUrl = path.dirname(options.path);
-        
+
         fse.ensureDirSync(baseUrl);
 
         let writer = fs.createWriteStream(options.path, options);
@@ -67,7 +67,7 @@ class FileSource extends Source{
      * @param {string} [option.encoding]
      * @param {int} [option.highWaterMark]
      * @param {beforeCreateCallback} [option.beforeCreate]
-     * @returns {stream.Readable}
+     * @returns {stream.Readable|Null}
      */
     createReadableStream (option){
         option = Object.assign({}, this.config, option);
@@ -76,8 +76,9 @@ class FileSource extends Source{
         options = option.beforeCreate(options);
         // create baseUrl if not exists
         let reader;
-        reader = fs.createReadStream(options.path, options);
-        // this.emit('create', file, writer);
+        if (fs.existsSync(options.path)) {
+          reader = fs.createReadStream(options.path, options);
+        }
         return reader;
     }
 }

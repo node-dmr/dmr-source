@@ -132,7 +132,7 @@ Source(dmr-source) is data files stored locally or remotely, which can be read o
 
 const Range = require('dmr-util').range;
 let range = new Range({"startTimeStamp": 1532608141511, "endTimeStamp": 1532611765781});
-let scope = range.toScope(); // such as 
+let scope = range.toScope(); // such as
 // scope = {"YYYY":"2018", "MM": "12", "DD":"01", "hh": "01", "mm": "00", "ss": "00", interval: {"m": 60, "s": "3600", "h": "1"}}
 
 let output = new require('dmr-source').FileSource({
@@ -184,7 +184,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 * [FileSource](#FileSource) ⇐ [<code>Source</code>](#Source)
     * [new FileSource([config])](#new_FileSource_new)
     * [.createWritableStream([option])](#FileSource+createWritableStream) ⇒ <code>stream.Writable</code>
-    * [.createReadableStream([option])](#FileSource+createReadableStream) ⇒ <code>stream.Readable</code>
+    * [.createReadableStream([option])](#FileSource+createReadableStream) ⇒ <code>stream.Readable</code> \| <code>Null</code>
 
 <a name="new_FileSource_new"></a>
 
@@ -199,7 +199,12 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 **Example**  
 ```js
-// copy a big log filelet fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});let input = fileSource.createReadableStream({scope: {"date": "20180801"}});let output = fileSource.createWritableStream({scope: {"date": "20180802"}});input.pipe(output);
+// copy a big log file
+
+let fileSource = new FileSource({"file": "`/home/work/dmr.${date}.log`"});
+let input = fileSource.createReadableStream({scope: {"date": "20180801"}});
+let output = fileSource.createWritableStream({scope: {"date": "20180802"}});
+input.pipe(output);
 ```
 <a name="FileSource+createWritableStream"></a>
 
@@ -219,7 +224,7 @@ FileSource can provide a ReadableStream/WritableStream of local file
 
 <a name="FileSource+createReadableStream"></a>
 
-### fileSource.createReadableStream([option]) ⇒ <code>stream.Readable</code>
+### fileSource.createReadableStream([option]) ⇒ <code>stream.Readable</code> \| <code>Null</code>
 **Kind**: instance method of [<code>FileSource</code>](#FileSource)  
 **Implements**: <code>createReadableStream</code>  
 **Overrides**: [<code>createReadableStream</code>](#Source+createReadableStream)  
@@ -372,6 +377,7 @@ MultiSource can provide a ReadableStream which composed of multiple readable str
 * [MultiSource](#MultiSource) ⇐ [<code>Source</code>](#Source)
     * [new MultiSource([config])](#new_MultiSource_new)
     * [.add(stream)](#MultiSource+add) ⇒ [<code>MultiSource</code>](#MultiSource)
+    * [.addSource(source)](#MultiSource+addSource) ⇒ [<code>MultiSource</code>](#MultiSource)
     * [.createReadableStream()](#MultiSource+createReadableStream)
     * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
 
@@ -385,7 +391,22 @@ MultiSource can provide a ReadableStream which composed of multiple readable str
 
 **Example**  
 ```js
-// MultiSourcelet multiSource = new MultiSource();multiSource.add(stream1).add(stream2).add(stream3);let input = multiSource.createReadableStream();input.on('error', err => {   // error will be emit when any input stream error   // and output is nothing});input.pipe(process.stdout);
+// MultiSource
+
+let multiSource = new MultiSource();
+multiSource.add(stream1).add(stream2).add(stream3);
+let input = multiSource.createReadableStream();
+
+input.on('error', err => {
+   // error will be emit when any input stream error
+   // and output is nothing
+});
+
+input.pipe(process.stdout);
+
+// if you need lazy createReadableStream try addSource
+let httpSource = new HttpSource(config);
+multiSource.addSource(httpSource, option).add(httpSource, option);
 ```
 <a name="MultiSource+add"></a>
 
@@ -397,6 +418,17 @@ Add a Readable stream. It will be failed when createReadableStream has been call
 | Param | Type |
 | --- | --- |
 | stream | <code>stream.Readable</code> | 
+
+<a name="MultiSource+addSource"></a>
+
+### multiSource.addSource(source) ⇒ [<code>MultiSource</code>](#MultiSource)
+Add Source and option, it will create Readable stream when needed
+
+**Kind**: instance method of [<code>MultiSource</code>](#MultiSource)  
+
+| Param | Type |
+| --- | --- |
+| source | [<code>Source</code>](#Source) | 
 
 <a name="MultiSource+createReadableStream"></a>
 
