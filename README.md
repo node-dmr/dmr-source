@@ -377,7 +377,7 @@ MultiSource can provide a ReadableStream which composed of multiple readable str
 * [MultiSource](#MultiSource) ⇐ [<code>Source</code>](#Source)
     * [new MultiSource([config])](#new_MultiSource_new)
     * [.add(stream)](#MultiSource+add) ⇒ [<code>MultiSource</code>](#MultiSource)
-    * [.addSource(source)](#MultiSource+addSource) ⇒ [<code>MultiSource</code>](#MultiSource)
+    * [.addSource(source, option)](#MultiSource+addSource) ⇒ [<code>MultiSource</code>](#MultiSource)
     * [.createReadableStream()](#MultiSource+createReadableStream)
     * *[.createWritableStream(option)](#Source+createWritableStream) ⇒ <code>stream.Writable</code>*
 
@@ -421,7 +421,7 @@ Add a Readable stream. It will be failed when createReadableStream has been call
 
 <a name="MultiSource+addSource"></a>
 
-### multiSource.addSource(source) ⇒ [<code>MultiSource</code>](#MultiSource)
+### multiSource.addSource(source, option) ⇒ [<code>MultiSource</code>](#MultiSource)
 Add Source and option, it will create Readable stream when needed
 
 **Kind**: instance method of [<code>MultiSource</code>](#MultiSource)  
@@ -429,6 +429,7 @@ Add Source and option, it will create Readable stream when needed
 | Param | Type |
 | --- | --- |
 | source | [<code>Source</code>](#Source) | 
+| option | <code>Object</code> | 
 
 <a name="MultiSource+createReadableStream"></a>
 

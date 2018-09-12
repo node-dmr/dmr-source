@@ -2,7 +2,7 @@
  * @Author: qiansc
  * @Date: 2018-04-10 16:23:15
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-09-12 13:42:15
+ * @Last Modified time: 2018-09-12 13:59:43
  */
 const Stream = require('stream');
 const Source = require('./source');
@@ -50,6 +50,7 @@ class MultiSource extends Source{
     /**
      * Add Source and option, it will create Readable stream when needed
      * @param  {Source} source
+     * @param  {Object} option
      * @returns {MultiSource}
      */
     addSource(source, option) {
