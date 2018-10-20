@@ -1,6 +1,6 @@
 {
   "name": "dmr-source",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "discription": "source modules of node-dmr",
   "scripts": {
     "preversion": "tsc && npm run lint && npm run cover",
