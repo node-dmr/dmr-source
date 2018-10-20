@@ -1,17 +1,17 @@
 import assert = require("assert");
 import {expect} from "chai";
 import { Readable , Writable} from "stream";
-import {Source} from "../src";
+import {InterfaceConfig, Source} from "../src";
 
 import log from "./util/log";
 
 describe("Source croustrct Check", () => {
   it("Extends Source", () => {
-    class S extends Source {
-      public createReadableStream(): Readable {
+    class S extends Source <InterfaceConfig, InterfaceConfig, InterfaceConfig> {
+      public _createReadableStream(): Readable {
         return new Readable();
       }
-      public createWritableStream(): Writable {
+      public _createWritableStream(): Writable {
         return new Writable();
       }
     }
