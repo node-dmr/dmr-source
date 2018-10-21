@@ -28,21 +28,4 @@ to be continue...
 
 # API
 
-## Classes
-
-* [Source](docs/classes/source.md)
-* [FileSource](docs/classes/filesource.md)
-* [FtpSource](docs/classes/ftpsource.md)
-* [HttpSource](docs/classes/httpsource.md)
-* [MultiSource](docs/classes/multisource.md)
-
-## Interfaces
-
-* [FileConfig](docs/interfaces/fileconfig.md)
-* [FileReadOption](docs/interfaces/filereadoption.md)
-* [FileWriteOption](docs/interfaces/filewriteoption.md)
-* [FtpConfig](docs/interfaces/ftpconfig.md)
-* [FtpReadOption](docs/interfaces/ftpreadoption.md)
-* [HttpConfig](docs/interfaces/httpconfig.md)
-* [HttpReadOption](docs/interfaces/httpreadoption.md)
-* [InterfaceConfig](docs/interfaces/interfaceconfig.md)
+* [https://node-dmr.github.io/dmr-source/](https://node-dmr.github.io/dmr-source/)

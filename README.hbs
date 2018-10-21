@@ -27,7 +27,7 @@ Get file from ftp server to local
 ```js
 const Range = require('dmr-util').range;
 let range = new Range({"startTimeStamp": 1532608141511, "endTimeStamp": 1532611765781});
-let scope = range.toScope(); // such as 
+let scope = range.toScope(); // such as
 // scope = {"YYYY":"2018", "MM": "12", "DD":"01", "hh": "01", "mm": "00", "ss": "00", interval: {"m": 60, "s": "3600", "h": "1"}}
 
 let fileSource = new require('dmr-source').FileSource({
@@ -66,5 +66,3 @@ httpSource.createReadableStream({"url": "http://xxx.com/log.gz"})
 ```
 
 # API
-
-{{>main}}
