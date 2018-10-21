@@ -909,9 +909,6 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-class tsd-is-not-exported">
-			<a href="classes/connector.html" class="tsd-kind-icon">Connector</a>
-		</li>
 		<li class=" tsd-kind-class">
 			<a href="classes/filesource.html" class="tsd-kind-icon">File<wbr>Source</a>
 		</li>
@@ -951,6 +948,9 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/interfaceconfig.html" class="tsd-kind-icon">Interface<wbr>Config</a>
 		</li>
+		<li class=" tsd-kind-type-alias tsd-is-not-exported">
+			<a href="globals.html#getreadable" class="tsd-kind-icon">Get<wbr>Readable</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
@@ -961,9 +961,7 @@ img { max-width: 100%; }
 				<a href="https://www.npmjs.org/package/dmr-source"><img src="https://img.shields.io/npm/v/dmr-source.svg" alt="npm package"></a>
 			<a href="https://www.npmjs.org/package/dmr-source"><img src="http://img.shields.io/npm/dm/dmr-source.svg" alt="npm downloads"></a></p>
 			<h1 id="what-s-dmr-source">What&#39;s dmr-source</h1>
-			<p>Dmr-source is source modules of dmr framework.
-				The source is the abstraction of the DMR framework input.
-			dmr-source will support different kinds of storage such as local file / remote (http / ftp) / hadoop / ssh2...</p>
+			<p>Dmr-Source provides unified methods to achieve stream of data sources, such as local / remote (http / ftp) ...</p>
 			<ul>
 				<li><input checked="" disabled="" type="checkbox"> Source</li>
 				<li><input checked="" disabled="" type="checkbox"> FileSource</li>
@@ -973,45 +971,34 @@ img { max-width: 100%; }
 				<li><input disabled="" type="checkbox"> SftpSource</li>
 				<li><input disabled="" type="checkbox"> HadoopSource</li>
 			</ul>
-			<h1 id="features">Features</h1>
-			<ul>
-				<li>ES6Template construct config make it easy to be reused</li>
-				<li>Stream based API</li>
-			</ul>
 			<h1 id="usage">Usage</h1>
 			<p>Get file from ftp server to local</p>
-			<pre><code class="language-js"><span class="hljs-keyword">const</span> Range = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dmr-util'</span>).range;
-<span class="hljs-keyword">let</span> range = <span class="hljs-keyword">new</span> Range({<span class="hljs-string">"startTimeStamp"</span>: <span class="hljs-number">1532608141511</span>, <span class="hljs-string">"endTimeStamp"</span>: <span class="hljs-number">1532611765781</span>});
-<span class="hljs-keyword">let</span> scope = range.toScope(); <span class="hljs-comment">// such as</span>
-<span class="hljs-comment">// scope = {"YYYY":"2018", "MM": "12", "DD":"01", "hh": "01", "mm": "00", "ss": "00", interval: {"m": 60, "s": "3600", "h": "1"}}</span>
-
-<span class="hljs-keyword">let</span> fileSource = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'dmr-source'</span>).FileSource({
-  <span class="hljs-string">"path"</span>: <span class="hljs-string">"`/home/work/data/log/search/{$YYYY}{$MM}{$DD}.{$hh}{$mm}-{$interval.m}`"</span>
+			<pre><code class="language-Typescript"><span class="hljs-keyword">const</span> fs = <span class="hljs-keyword">new</span> FtpSource({
+  host: <span class="hljs-string">"127.0.0.1"</span>,
+  path: <span class="hljs-string">"/source-ftp-test.dict"</span>,
+  port: <span class="hljs-number">21</span>,
 });
-<span class="hljs-keyword">let</span> output = fileSource.createWritableStream({<span class="hljs-attr">scope</span>: scope});
-
-<span class="hljs-keyword">let</span> input = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'dmr-source'</span>).FtpSource({
-  <span class="hljs-string">"host"</span>: <span class="hljs-string">"test.hz01.demo.com"</span>,
-  <span class="hljs-string">"path"</span>: <span class="hljs-string">"`/home/work/speedup/{$YYYY}{$MM}{$DD}/{$hh}.gz`"</span>,
-  <span class="hljs-string">"port"</span>: <span class="hljs-string">"21"</span>
-}).createReadableStream({<span class="hljs-attr">scope</span>: scope});
-
-<span class="hljs-comment">// load ftp file from ftp://test.hz01.demo.com:21/home/work/speedup/20181201/01.gz</span>
-<span class="hljs-comment">// save to local file to /home/work/data/log/search/20181201.0100-60</span>
-input.pipe(output);</code></pre>
-			<p>Copy local file and change path by fetch new Range</p>
-			<pre><code class="language-js"><span class="hljs-keyword">let</span> scope0 = <span class="hljs-keyword">new</span> Range({<span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-08-01"</span>, <span class="hljs-string">"last"</span>: <span class="hljs-string">"1h"</span>}).toScope();
-fileSource.createReadableStream({<span class="hljs-attr">scope</span>: scope}).pipe(
-    fileSource.createWritableStream({<span class="hljs-attr">scope</span>: scope0});
-);</code></pre>
-			<p>And you can use the dmr-source link dmr-pipeline (or any other transformer) to achieve magic transformation.</p>
-			<pre><code class="language-js"><span class="hljs-keyword">let</span> ungzip =  <span class="hljs-built_in">require</span>(<span class="hljs-string">"zlib"</span>).createGunzip();
-<span class="hljs-keyword">let</span> line =  <span class="hljs-built_in">require</span>(<span class="hljs-string">"dmr-pipeline"</span>).lineBreaker;
-httpSource.createReadableStream({<span class="hljs-string">"url"</span>: <span class="hljs-string">"http://xxx.com/log.gz"</span>})
-  .pipe(ungzip)
-  .pipe(<span class="hljs-keyword">new</span> lineBreaker())
-  .pipe(fileSource.createReadableStream());</code></pre>
+<span class="hljs-keyword">const</span> writer = <span class="hljs-keyword">new</span> FileSource().createWritableStream({path: <span class="hljs-string">"/home/work/a.log"</span>});
+fs.createReadableStream().pipe(writer);</code></pre>
+			<p>Copy big file by FileSource</p>
+			<pre><code class="language-Typescript"><span class="hljs-keyword">const</span> fs = <span class="hljs-keyword">new</span> FileSource({encoding: <span class="hljs-string">"utf8"</span>});
+<span class="hljs-keyword">const</span> reader = fs.createReadableStream({path: <span class="hljs-string">"/home/work/a.log"</span>});
+<span class="hljs-keyword">const</span> writer =fs.createWritableStream(<span class="hljs-function">(<span class="hljs-params">option</span>) =&gt;</span> {
+  option.path = <span class="hljs-string">"/home/work/b.log"</span>;
+  <span class="hljs-keyword">return</span> option;
+});
+reader.pipe(writer);</code></pre>
+			<p>Link readables to one readable stream</p>
+			<pre><code class="language-Typescript"><span class="hljs-keyword">const</span> stream1 = <span class="hljs-keyword">new</span> HttpSource({host: <span class="hljs-string">"localhost"</span>, path: <span class="hljs-string">"/a.log"</span>}).createReadableStream();
+<span class="hljs-keyword">const</span> stream2 = <span class="hljs-keyword">new</span> FileSource({host: <span class="hljs-string">"localhost"</span>, path: <span class="hljs-string">"/b.log"</span>}).createReadableStream();
+<span class="hljs-keyword">const</span> ms = <span class="hljs-keyword">new</span> MultiSource().add(stream1).add(stream2).add(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> FileSource({host: <span class="hljs-string">"localhost"</span>, path: <span class="hljs-string">"/c.log"</span>}).createReadableStream();
+});
+ms.createReadableStream().on(<span class="hljs-string">"data"</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(chunk));</code></pre>
 			<h1 id="api">API</h1>
+			<ul>
+				<li><a href="https://node-dmr.github.io/dmr-source/">https://node-dmr.github.io/dmr-source/</a></li>
+			</ul>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
@@ -1021,7 +1008,6 @@ httpSource.createReadableStream({<span class="hljs-string">"url"</span>: <span c
 					<section class="tsd-index-section ">
 						<h3>Classes</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-class tsd-is-not-exported"><a href="classes/connector.html" class="tsd-kind-icon">Connector</a></li>
 							<li class="tsd-kind-class"><a href="classes/filesource.html" class="tsd-kind-icon">File<wbr>Source</a></li>
 							<li class="tsd-kind-class"><a href="classes/ftpsource.html" class="tsd-kind-icon">Ftp<wbr>Source</a></li>
 							<li class="tsd-kind-class"><a href="classes/httpsource.html" class="tsd-kind-icon">Http<wbr>Source</a></li>
@@ -1042,6 +1028,40 @@ httpSource.createReadableStream({<span class="hljs-string">"url"</span>: <span c
 							<li class="tsd-kind-interface"><a href="interfaces/interfaceconfig.html" class="tsd-kind-icon">Interface<wbr>Config</a></li>
 						</ul>
 					</section>
+					<section class="tsd-index-section tsd-is-not-exported">
+						<h3>Type aliases</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-type-alias tsd-is-not-exported"><a href="globals.html#getreadable" class="tsd-kind-icon">Get<wbr>Readable</a></li>
+						</ul>
+					</section>
+				</div>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<h2>Type aliases</h2>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-not-exported">
+				<a name="getreadable" class="tsd-anchor"></a>
+				<h3>Get<wbr>Readable</h3>
+				<div class="tsd-signature tsd-kind-icon">Get<wbr>Readable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/638294c/src/source-multi.ts#L78">source-multi.ts:78</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readable</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readable</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</section>
 		</section>

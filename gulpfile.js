@@ -25,12 +25,12 @@ gulp.task("doc", function() {
             name: "DMR Source",
             hideGenerator: true,
             version: false,
-            theme: "minimal", // markdown | minimal
+            theme: "minimal", // markdown | minimal | default
             mode: "file",
-            exclude: ['src/index.ts'],
+            exclude: ['src/index.ts', 'src/connector.ts'],
             excludePrivate: true,
             excludeProtected: true,
             help: false,
-            readme: "README.hbs"
+            readme: "README.md"
         }));
 });

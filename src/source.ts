@@ -2,9 +2,8 @@
  * @Author: qiansc
  * @Date: 2018-04-10 17:02:27
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-10-20 21:23:53
+ * @Last Modified time: 2018-10-21 16:59:29
  */
-import {EventEmitter} from "events";
 import {Readable, Writable} from "stream";
 
 export abstract class Source
@@ -12,13 +11,11 @@ export abstract class Source
   Config extends InterfaceConfig,
   ReadOption extends InterfaceConfig,
   WriteOption extends InterfaceConfig,
-  >
-  extends EventEmitter {
+  > {
 
   protected config: Config;
 
   constructor(config?: Config) {
-    super();
     this.config = config || {} as Config;
   }
 
@@ -43,21 +40,3 @@ export abstract class Source
 }
 
 export interface InterfaceConfig {}
-
-// export interface InterfaceScope {
-//   [index: string]: any;
-// }
-
-// export const fetchConfig = <T extends InterfaceConfig> (option: T, scope: InterfaceScope): T => {
-//   const newOption: T = {} as T;
-//   Object.keys(option).forEach((key) => {
-//     if (typeof option[key] === "string" && expression.isExprLike(option[key])) {
-//       newOption[key] = expression.resolve(option[key])(scope);
-//     } else if (typeof option[key] === "object") {
-//       newOption[key] = fetchConfig(option[key], scope);
-//     } else {
-//       newOption[key] =  option[key];
-//     }
-//   });
-//   return newOption;
-// };

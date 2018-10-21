@@ -6,9 +6,7 @@
 
 # What's dmr-source
 
-Dmr-source is source modules of dmr framework.
-The source is the abstraction of the DMR framework input.
-dmr-source will support different kinds of storage such as local file / remote (http / ftp) / hadoop / ssh2...
+Dmr-Source provides unified methods to achieve stream of data sources, such as local / remote (http / ftp) ...
 
 - [x] Source
 - [x] FileSource
@@ -18,13 +16,39 @@ dmr-source will support different kinds of storage such as local file / remote (
 - [ ] SftpSource
 - [ ] HadoopSource
 
-# Features
-- Stream based API
-- Typescript
-
 # Usage
 
-to be continue...
+Get file from ftp server to local
+```Typescript
+const fs = new FtpSource({
+  host: "127.0.0.1",
+  path: "/source-ftp-test.dict",
+  port: 21,
+});
+const writer = new FileSource().createWritableStream({path: "/home/work/a.log"});
+fs.createReadableStream().pipe(writer);
+```
+
+Copy big file by FileSource
+```Typescript
+const fs = new FileSource({encoding: "utf8"});
+const reader = fs.createReadableStream({path: "/home/work/a.log"});
+const writer =fs.createWritableStream((option) => {
+  option.path = "/home/work/b.log";
+  return option;
+});
+reader.pipe(writer);
+```
+
+Link readables to one readable stream
+```Typescript
+const stream1 = new HttpSource({host: "localhost", path: "/a.log"}).createReadableStream();
+const stream2 = new FileSource({host: "localhost", path: "/b.log"}).createReadableStream();
+const ms = new MultiSource().add(stream1).add(stream2).add(() => {
+  return new FileSource({host: "localhost", path: "/c.log"}).createReadableStream();
+});
+ms.createReadableStream().on("data", (chunk) => console.log(chunk));
+```
 
 # API
 
