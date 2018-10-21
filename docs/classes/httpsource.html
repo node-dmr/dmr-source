@@ -970,13 +970,13 @@ img { max-width: 100%; }
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
 					<pre><code class="language-Typescript"><span class="hljs-comment">// Example - Download By HttpSource</span>
-<span class="hljs-keyword">const</span> fs = <span class="hljs-keyword">new</span> HttpSource({
+<span class="hljs-keyword">const</span> hs = <span class="hljs-keyword">new</span> HttpSource({
  host: <span class="hljs-string">"localhost"</span>,
  path: <span class="hljs-string">"/"</span>,
  port: <span class="hljs-string">"8099"</span>,
 });
 <span class="hljs-keyword">const</span> writer = <span class="hljs-keyword">new</span> FileSource().createWritableStream({path: <span class="hljs-string">"/home/work/a.log"</span>});
-fs.createReadableStream().pipe(writer);</code></pre>
+hs.createReadableStream().pipe(writer);</code></pre>
 				</div>
 			</div>
 		</section>
@@ -1026,7 +1026,7 @@ fs.createReadableStream().pipe(writer);</code></pre>
 						<aside class="tsd-sources">
 							<p>Overrides <a href="source.html">Source</a>.<a href="source.html#constructor">constructor</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/4636cce/src/source-http.ts#L25">source-http.ts:25</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source-http.ts#L25">source-http.ts:25</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1053,7 +1053,7 @@ fs.createReadableStream().pipe(writer);</code></pre>
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="source.html">Source</a>.<a href="source.html#createreadablestream">createReadableStream</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/4636cce/src/source.ts#L22">source.ts:22</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source.ts#L22">source.ts:22</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1077,7 +1077,7 @@ fs.createReadableStream().pipe(writer);</code></pre>
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="source.html">Source</a>.<a href="source.html#createwritablestream">createWritableStream</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/4636cce/src/source.ts#L30">source.ts:30</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source.ts#L30">source.ts:30</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>

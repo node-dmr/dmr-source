@@ -2,7 +2,7 @@
  * @Author: qiansc
  * @Date: 2018-04-10 16:23:15
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-10-21 17:37:47
+ * @Last Modified time: 2018-10-21 17:57:53
  */
 import * as http from "http";
 import {Readable} from "stream";
@@ -13,13 +13,13 @@ import {InterfaceConfig, Source} from "./source";
 /**
  * ```Typescript
  * // Example - Download By HttpSource
- * const fs = new HttpSource({
+ * const hs = new HttpSource({
  *  host: "localhost",
  *  path: "/",
  *  port: "8099",
  * });
  * const writer = new FileSource().createWritableStream({path: "/home/work/a.log"});
- * fs.createReadableStream().pipe(writer);
+ * hs.createReadableStream().pipe(writer);
  * ```
  */
 export class HttpSource extends Source<HttpConfig, HttpReadOption, InterfaceConfig> {
