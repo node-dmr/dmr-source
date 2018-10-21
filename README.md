@@ -50,6 +50,20 @@ const ms = new MultiSource().add(stream1).add(stream2).add(() => {
 ms.createReadableStream().on("data", (chunk) => console.log(chunk));
 ```
 
+Events
+```Typescript
+const stream = new HttpSource({host: "localhost", path: "/404.page", timeout: 6000})
+  .createReadableStream();
+stream.on("error", (err) => {
+  console.log("should be 404 error", err);
+});
+stream.on("end", (err) => {
+  console.log("never arrive end");
+});
+```
+
+
 # API
+
 
 * [https://node-dmr.github.io/dmr-source/](https://node-dmr.github.io/dmr-source/)

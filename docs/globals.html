@@ -995,6 +995,15 @@ reader.pipe(writer);</code></pre>
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> FileSource({host: <span class="hljs-string">"localhost"</span>, path: <span class="hljs-string">"/c.log"</span>}).createReadableStream();
 });
 ms.createReadableStream().on(<span class="hljs-string">"data"</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(chunk));</code></pre>
+			<p>Events</p>
+			<pre><code class="language-Typescript"><span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">new</span> HttpSource({host: <span class="hljs-string">"localhost"</span>, path: <span class="hljs-string">"/404.page"</span>, timeout: <span class="hljs-number">6000</span>})
+  .createReadableStream();
+stream.on(<span class="hljs-string">"error"</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"should be 404 error"</span>, err);
+});
+stream.on(<span class="hljs-string">"end"</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"never arrive end"</span>);
+});</code></pre>
 			<h1 id="api">API</h1>
 			<ul>
 				<li><a href="https://node-dmr.github.io/dmr-source/">https://node-dmr.github.io/dmr-source/</a></li>
@@ -1044,7 +1053,7 @@ ms.createReadableStream().on(<span class="hljs-string">"data"</span>, <span clas
 				<div class="tsd-signature tsd-kind-icon">Get<wbr>Readable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/638294c/src/source-multi.ts#L78">source-multi.ts:78</a></li>
+						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/4636cce/src/source-multi.ts#L78">source-multi.ts:78</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
