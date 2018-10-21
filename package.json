@@ -5,7 +5,7 @@
   "scripts": {
     "preversion": "tsc && npm run lint && npm run cover",
     "lint": "tslint src/**/*.ts test/**/*.ts",
-    "doc": "rm -rf docs/ && gulp doc",
+    "doc": "gulp doc",
     "test": "node_modules/mocha/bin/_mocha --require ts-node/register --require source-map-support/register -t 3000 --recursive",
     "cover": "node_modules/nyc/bin/nyc.js npm run test test/*.ts && node_modules/nyc/bin/nyc.js report --reporter=text",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
