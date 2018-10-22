@@ -959,8 +959,14 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-interface">
 			<a href="../interfaces/interfaceconfig.html" class="tsd-kind-icon">Interface<wbr>Config</a>
 		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+			<a href="../globals.html#getreadoption" class="tsd-kind-icon">Get<wbr>Read<wbr>Option</a>
+		</li>
 		<li class=" tsd-kind-type-alias tsd-is-not-exported">
 			<a href="../globals.html#getreadable" class="tsd-kind-icon">Get<wbr>Readable</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+			<a href="../globals.html#getwriteoption" class="tsd-kind-icon">Get<wbr>Write<wbr>Option</a>
 		</li>
 	</ul>
 </nav>
@@ -1026,7 +1032,7 @@ fs.createReadableStream().pipe(writer);</code></pre>
 						<aside class="tsd-sources">
 							<p>Overrides <a href="source.html">Source</a>.<a href="source.html#constructor">constructor</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source-ftp.ts#L25">source-ftp.ts:25</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source-ftp.ts#L25">source-ftp.ts:25</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1046,20 +1052,25 @@ fs.createReadableStream().pipe(writer);</code></pre>
 				<a name="createreadablestream" class="tsd-anchor"></a>
 				<h3>create<wbr>Readable<wbr>Stream</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">create<wbr>Readable<wbr>Stream<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">?: </span><a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readable</span></li>
+					<li class="tsd-signature tsd-kind-icon">create<wbr>Readable<wbr>Stream<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">?: </span><a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#getreadoption" class="tsd-signature-type">GetReadOption</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ftpconfig.html" class="tsd-signature-type">FtpConfig</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readable</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="source.html">Source</a>.<a href="source.html#createreadablestream">createReadableStream</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source.ts#L22">source.ts:22</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source.ts#L24">source.ts:24</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>GetReadOption&lt;Config, ReadOption&gt; = (config: Config) =&gt; ReadOption;</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#getreadoption" class="tsd-signature-type">GetReadOption</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ftpconfig.html" class="tsd-signature-type">FtpConfig</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/ftpreadoption.html" class="tsd-signature-type">FtpReadOption</a><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readable</span></h4>
@@ -1070,20 +1081,25 @@ fs.createReadableStream().pipe(writer);</code></pre>
 				<a name="createwritablestream" class="tsd-anchor"></a>
 				<h3>create<wbr>Writable<wbr>Stream</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<li class="tsd-signature tsd-kind-icon">create<wbr>Writable<wbr>Stream<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">?: </span><a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writable</span></li>
+					<li class="tsd-signature tsd-kind-icon">create<wbr>Writable<wbr>Stream<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">?: </span><a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#getwriteoption" class="tsd-signature-type">GetWriteOption</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ftpconfig.html" class="tsd-signature-type">FtpConfig</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writable</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="source.html">Source</a>.<a href="source.html#createwritablestream">createWritableStream</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source.ts#L30">source.ts:30</a></li>
+								<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source.ts#L35">source.ts:35</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>GetWriteOption&lt;Config, WriteOption&gt; = (config: Config) =&gt; WriteOption;</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#getwriteoption" class="tsd-signature-type">GetWriteOption</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ftpconfig.html" class="tsd-signature-type">FtpConfig</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/interfaceconfig.html" class="tsd-signature-type">InterfaceConfig</a><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writable</span></h4>

@@ -18,8 +18,10 @@ export abstract class Source
   constructor(config?: Config) {
     this.config = config || {} as Config;
   }
-
-  public createReadableStream(option?: ReadOption | ((config: Config) => ReadOption) ): Readable {
+  /**
+   * GetReadOption<Config, ReadOption> = (config: Config) => ReadOption;
+   */
+  public createReadableStream(option?: ReadOption | GetReadOption<Config, ReadOption> ): Readable {
     if (typeof option === "function") {
       option = (option as ((C) => ReadOption))(Object.assign({}, this.config));
     }
@@ -27,7 +29,10 @@ export abstract class Source
     return this._createReadableStream(option) as Readable;
   }
 
-  public createWritableStream(option?: WriteOption | ((config: Config) => WriteOption)): Writable {
+  /**
+   * GetWriteOption<Config, WriteOption> = (config: Config) => WriteOption;
+   */
+  public createWritableStream(option?: WriteOption | GetWriteOption<Config, WriteOption>): Writable {
     if (typeof option === "function") {
       option = (option as ((C) => WriteOption))(Object.assign({}, this.config));
     }
@@ -40,3 +45,5 @@ export abstract class Source
 }
 
 export interface InterfaceConfig {}
+type GetReadOption<Config, ReadOption> = (config: Config) => ReadOption;
+type GetWriteOption<Config, WriteOption> = (config: Config) => WriteOption;

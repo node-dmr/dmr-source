@@ -948,8 +948,14 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/interfaceconfig.html" class="tsd-kind-icon">Interface<wbr>Config</a>
 		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+			<a href="globals.html#getreadoption" class="tsd-kind-icon">Get<wbr>Read<wbr>Option</a>
+		</li>
 		<li class=" tsd-kind-type-alias tsd-is-not-exported">
 			<a href="globals.html#getreadable" class="tsd-kind-icon">Get<wbr>Readable</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+			<a href="globals.html#getwriteoption" class="tsd-kind-icon">Get<wbr>Write<wbr>Option</a>
 		</li>
 	</ul>
 </nav>
@@ -1040,7 +1046,9 @@ stream.on(<span class="hljs-string">"end"</span>, <span class="hljs-function">(<
 					<section class="tsd-index-section tsd-is-not-exported">
 						<h3>Type aliases</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported"><a href="globals.html#getreadoption" class="tsd-kind-icon">Get<wbr>Read<wbr>Option</a></li>
 							<li class="tsd-kind-type-alias tsd-is-not-exported"><a href="globals.html#getreadable" class="tsd-kind-icon">Get<wbr>Readable</a></li>
+							<li class="tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported"><a href="globals.html#getwriteoption" class="tsd-kind-icon">Get<wbr>Write<wbr>Option</a></li>
 						</ul>
 					</section>
 				</div>
@@ -1048,13 +1056,44 @@ stream.on(<span class="hljs-string">"end"</span>, <span class="hljs-function">(<
 		</section>
 		<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 			<h2>Type aliases</h2>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+				<a name="getreadoption" class="tsd-anchor"></a>
+				<h3>Get<wbr>Read<wbr>Option</h3>
+				<div class="tsd-signature tsd-kind-icon">Get<wbr>Read<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source.ts#L48">source.ts:48</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Config</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadOption</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>config: <span class="tsd-signature-type">Config</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadOption</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-not-exported">
 				<a name="getreadable" class="tsd-anchor"></a>
 				<h3>Get<wbr>Readable</h3>
 				<div class="tsd-signature tsd-kind-icon">Get<wbr>Readable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/58be13d/src/source-multi.ts#L78">source-multi.ts:78</a></li>
+						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source-multi.ts#L78">source-multi.ts:78</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1067,6 +1106,37 @@ stream.on(<span class="hljs-string">"end"</span>, <span class="hljs-function">(<
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readable</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+				<a name="getwriteoption" class="tsd-anchor"></a>
+				<h3>Get<wbr>Write<wbr>Option</h3>
+				<div class="tsd-signature tsd-kind-icon">Get<wbr>Write<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/node-dmr/dmr-source/blob/e9ae8c0/src/source.ts#L49">source.ts:49</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Config</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WriteOption</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>config: <span class="tsd-signature-type">Config</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">WriteOption</span></h4>
 								</li>
 							</ul>
 						</li>
