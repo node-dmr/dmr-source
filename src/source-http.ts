@@ -2,9 +2,10 @@
  * @Author: qiansc
  * @Date: 2018-04-10 16:23:15
  * @Last Modified by: qiansc
- * @Last Modified time: 2018-10-21 17:57:53
+ * @Last Modified time: 2019-07-04 23:26:14
  */
 import * as http from "http";
+import * as https from "https";
 import {Readable} from "stream";
 import Connector from "./connector";
 import * as SourceError from "./error";
@@ -32,7 +33,8 @@ export class HttpSource extends Source<HttpConfig, HttpReadOption, InterfaceConf
      */
     public _createReadableStream(option: HttpReadOption): Readable {
         const connector = new Connector();
-        const req = http.request(option, (res) => {
+        const client = option.protocol === "https:" ? http : https;
+        const req = client.request(option, (res) => {
             res.setEncoding(option.encoding || "utf8");
             res.pipe(connector);
         });
